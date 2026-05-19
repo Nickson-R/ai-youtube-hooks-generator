@@ -1,6 +1,6 @@
-# ai-youtube-hooks-generator
+# AI YouTube Automation v2
 AI-powered n8n workflow that generates viral YouTube hooks from video transcripts and stores them in Google Sheets.
-# AI YouTube Hooks Generator
+# AI YouTube Automation v2
 
 This project is an AI automation workflow built using n8n, OpenAI, and Google Sheets.
 
