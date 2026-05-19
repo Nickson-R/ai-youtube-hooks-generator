@@ -29,7 +29,6 @@ This project is an AI automation workflow built using n8n, OpenAI, and Google Sh
 ## Example Output
 - "Why most creators fail—and the tiny fix they ignore."
 - "Repurpose one clip and suddenly reach audiences you never had."
-- <img width="1918" height="891" alt="Screenshot 2026-05-19 013917" src="https://github.com/user-attachments/assets/4d9aff40-c159-472d-89b2-c71643a4158e" />
 
 
 ## Author
