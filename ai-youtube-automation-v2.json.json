@@ -1,0 +1,243 @@
+{
+  "name": "AI YouTube Automation v2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e01a29bc-08c5-4bff-a956-12d26c1ba530",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0740ea7c-f101-4f3a-8f6c-96d36064142c",
+              "name": "transcript",
+              "value": "Most creators fail because they only post long-form videos and ignore short-form content. Repurposing content helps grow faster and reach new audiences.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "647e9c1b-15ef-468a-8cdf-a78851c983a9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        560,
+        224
+      ],
+      "id": "dbcf9a8e-b9e3-407b-b612-8a7199448bb0",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "c3ccIPr0eLpcsR9i",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate 5 viral YouTube video titles from this transcript.\n\nRules:\n- under 60 characters\n- curiosity-driven\n- high CTR\n- simple English\n- no clickbait spam\n\nTranscript:\n{{$node[\"Edit Fields\"].json[\"transcript\"]}}",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        720,
+        208
+      ],
+      "id": "3fa1268a-7638-4c97-85f8-820a8b21d20e",
+      "name": "Title Generator"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate:\n- 5 viral YouTube hooks\n- 5 clickable YouTube titles\n\nbased on this transcript:\n\n{{$json.transcript}}\n\nRules:\n- curiosity driven\n- short and punchy\n- optimized for YouTube CTR\n- avoid generic titles",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        560,
+        0
+      ],
+      "id": "352cc2eb-1113-4c39-a9f6-a80f0628b7d3",
+      "name": "Hooks Generator"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1G9zs7ixFTu7quhl0RaZ3L8NGl0psDS2FmYTukTQLw9M",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1G9zs7ixFTu7quhl0RaZ3L8NGl0psDS2FmYTukTQLw9M/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Transcript": "={{$node[\"Edit Fields\"].json[\"transcript\"]}}",
+            "Hooks": "={{$node[\"Hooks Generator\"].json[\"text\"]}}",
+            "Titles": "={{$node[\"Title Generator\"].json[\"text\"]}}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Transcript",
+              "displayName": "Transcript",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hooks",
+              "displayName": "Hooks",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Titles",
+              "displayName": "Titles",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        912,
+        0
+      ],
+      "id": "cd6828e5-4c6e-466b-9bd4-fa9637649e1f",
+      "name": "Save To Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "1jpFQHj5F9Ws5hY3",
+          "name": "Google Sheets OAuth2 API"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Hooks Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Hooks Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Title Generator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Title Generator": {
+      "main": [
+        [
+          {
+            "node": "Save To Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hooks Generator": {
+      "main": [
+        [
+          {
+            "node": "Title Generator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "28ef9498-0775-42d3-b762-51f7f2eeca40",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0be8ca0f8bbae73a4da56401b4d3348c514ff7cba896c4f42a489f6d61210451"
+  },
+  "id": "k8H54CfBQfyDqpY1",
+  "tags": []
+}
