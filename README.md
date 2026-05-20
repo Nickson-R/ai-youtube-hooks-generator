@@ -13,13 +13,14 @@ AI automation workflow built using n8n, OpenAI, and Google Sheets to generate vi
 - OpenAI API
 - Google Sheets API
 
-## Workflow
+## Automationflow
 1. Input transcript
 2. AI generates hooks
 3. Results stored in Google Sheets
-## Workflow Screenshot
+## Automation flow Screenshot
 
-<img width="1919" height="914" alt="workflow-v2 png" src="https://github.com/user-attachments/assets/86f90f39-a785-4462-9a1c-f6ffb3675627" />
+<img width="1919" height="907" alt="workflow png" src="https://github.com/user-attachments/assets/02064e2c-d151-4116-9405-b056eaa0a83d" />
+
 
 
 ## Setup
@@ -28,10 +29,11 @@ AI automation workflow built using n8n, OpenAI, and Google Sheets to generate vi
 3. Connect Google Sheets credentials
 4. Run workflow
 
-## Example Output
+## Sample Output
 - "Why most creators fail—and the tiny fix they ignore."
 - "Repurpose one clip and suddenly reach audiences you never had."
+- <img width="1915" height="903" alt="sample output png" src="https://github.com/user-attachments/assets/279d2bdd-4ed3-4d21-84f3-80bb4e6ec57a" />
 
 
-## Author
+  ## Author
 Rex Nickson
